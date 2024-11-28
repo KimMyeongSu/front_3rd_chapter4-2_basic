@@ -20,8 +20,6 @@ function displayProducts(products) {
     const img = document.createElement("img")
     img.src = product.image
     img.alt = `product: ${product.title}`
-    //뷰포트에 들어올 때까지 이미지 로딩을 지연시킴
-    img.loading = "lazy"
     img.width = 250
     pictureDiv.appendChild(img)
 
@@ -66,31 +64,4 @@ loadProducts()
 // Simulate heavy operation. It could be a complex price calculation.
 for (let i = 0; i < 10000000; i++) {
   const temp = Math.sqrt(i) * Math.sqrt(i)
-}
-
-window.onload = () => {
-  let status = "idle"
-
-  let productSection = document.querySelector("#all-products")
-
-  // 쓰로틀링 함수
-  function throttle(func, limit) {
-    let inThrottle
-    return function () {
-      const args = arguments
-      const context = this
-      if (!inThrottle) {
-        func.apply(context, args)
-        inThrottle = true
-        setTimeout(() => (inThrottle = false), limit)
-      }
-    }
-  }
-
-  window.onscroll = throttle(() => {
-    let position = productSection.getBoundingClientRect().top - (window.scrollY + window.innerHeight)
-    if (status == "idle" && position <= 0) {
-      loadProducts()
-    }
-  }, 200)
 }
