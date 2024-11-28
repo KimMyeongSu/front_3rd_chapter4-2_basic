@@ -40,7 +40,10 @@ jobs:
         continue-on-error: true
         run: |
           URL="${{ github.event.inputs.url || 'http://localhost:8080' }}"
-          lhci autorun --collect.url=$URL
+          # 서버가 완전히 준비될 때까지 대기
+          sleep 10
+          # 더 긴 대기 시간과 함께 Lighthouse 실행
+          lhci autorun --collect.url=$URL --collect.settings.maxWaitForLoad=30000
 
       - name: Create GitHub Issue with Results
         if: always()
@@ -75,7 +78,7 @@ jobs:
             };
 
             const formatMetric = (value, metric) => {
-              if (!value) return 'N/A';
+              if (!value) return metric === 'INP' ? '사용자 상호작용 필요' : 'N/A';
               if (metric === 'CLS') return value.toFixed(3);
               return `${(value / 1000).toFixed(2)}s`;
             };
