@@ -22,6 +22,11 @@ function displayProducts(products) {
     img.alt = `product: ${product.title}`
     img.loading = "lazy" // 지연 로딩
     img.width = 250
+    img.srcset = `${product.image}?size=250 250w, ${product.image}?size=500 500w`
+    img.sizes = "(max-width: 500px) 250px, 500px"
+    img.onerror = () => {
+      img.src = "path/to/fallback-image.jpg"
+    }
     pictureDiv.appendChild(img)
 
     // 상품 정보 div 생성
