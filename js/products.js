@@ -5,26 +5,26 @@ async function loadProducts() {
 }
 
 function displayProducts(products) {
-  // Find the container where products will be displayed
+  // 상품들이 표시될 컨테이너 찾기
   const container = document.querySelector("#all-products .container")
 
-  // Iterate over each product and create the HTML structure safely
+  // 각 상품을 순회하면서 안전하게 HTML 구조 생성
   products.forEach((product) => {
-    // Create the main product div
+    // 메인 상품 div 생성
     const productElement = document.createElement("div")
     productElement.classList.add("product")
 
-    // Create the product picture div
+    // 상품 이미지 div 생성
     const pictureDiv = document.createElement("div")
     pictureDiv.classList.add("product-picture")
     const img = document.createElement("img")
     img.src = product.image
     img.alt = `product: ${product.title}`
-    img.loading = "lazy" // Lazy loading
+    img.loading = "lazy" // 지연 로딩
     img.width = 250
     pictureDiv.appendChild(img)
 
-    // Create the product info div
+    // 상품 정보 div 생성
     const infoDiv = document.createElement("div")
     infoDiv.classList.add("product-info")
 
@@ -71,9 +71,9 @@ window.onload = () => {
     if (status == "idle" && position <= 0) {
       loadProducts()
 
-      // Simulate heavy operation. It could be a complex price calculation. <-- need to improve this
-      // This is a blocking operation that will freeze the UI
-      // how to improve this: https://ko.javascript.info/event-loop <-- use event loop
+      // 무거운 작업 시뮬레이션. 복잡한 가격 계산이 될 수 있음
+      // 이는 UI를 멈추게 하는 차단 작업임
+      // 개선 방법: https://ko.javascript.info/event-loop <-- 이벤트 루프 사용
       for (let i = 0; i < 10000000; i++) {
         const temp = Math.sqrt(i) * Math.sqrt(i)
       }
